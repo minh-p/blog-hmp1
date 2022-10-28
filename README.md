@@ -12,3 +12,5 @@ All of these technologies would be needed to be learned.
     - [ ] Setup PostreSql server
 - [ ] Setup backend
     - [ ] Setup NextJS and connect it to PostreSql server.
+      - [X] Boilerplating
+        - [X] Basic Dynamic Routing (Static Generation).
