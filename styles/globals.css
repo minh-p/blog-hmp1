@@ -15,12 +15,21 @@ a {
   box-sizing: border-box;
 }
 
+h1 {
+  color:#BF7B58;
+}
+h2 {
+  color: #2ABDD7;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
   }
   body {
-    color: white;
-    background: black;
+    font-family: "sans-serif";
+    color: #A1AAD1;
+    background: #24283B;
+    margin-left: 10%;
   }
 }
