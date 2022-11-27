@@ -1,9 +1,43 @@
 html,
 body {
+  box-sizing: border-box;
   padding: 0;
   margin: 0;
+  margin-left: 10px;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+section {
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 10px;
+}
+
+nav {
+}
+
+nav ul {
+  list-style-type: none;
+}
+
+nav li {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+nav li a {
+  text-align: center;
+}
+
+nav li a:hover {
+  background-color: #000000;
 }
 
 a {
@@ -30,6 +64,5 @@ h2 {
     font-family: "sans-serif";
     color: #A1AAD1;
     background: #24283B;
-    margin-left: 10%;
   }
 }

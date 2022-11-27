@@ -9,8 +9,13 @@ All of these technologies would be needed to be learned.
 
 # Schedule
 - [ ] Set up database
-    - [ ] Setup PostreSql server
+    - [X] Setup PostreSql server
+	- [ ] Setup Prisma Schema
 - [ ] Setup backend
-    - [ ] Setup NextJS and connect it to PostreSql server.
-      - [X] Boilerplating
-        - [X] Basic Dynamic Routing (Static Generation).
+	- [X] Boilerplating
+		- [X] Basic Dynamic Routing (Static Generation).
+	- [ ] Blog Writing and Publishing And Fetching
+		- [ ] Writing and Publishing
+			- [ ] Authenticate To Write Using NextAuth.js
+			- [ ] Setup Markdown Writer, Will Probably Use Markdown-it
+		- [ ] Fetching

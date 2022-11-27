@@ -18,18 +18,24 @@ export async function getStaticPaths() {
   const paths = posts.map((post) => ({
     params: { id: post.id },
   }));
-  return { paths, fallback: false };
+  return { paths, fallback: true };
 }
 
 export async function getStaticProps({ params }) {
   // Get post information from params.id as provided via processing of the getStaticPaths function.
   return {
-    props: { post: {} }
+    props: { post: {} },
+    revalidate: 120
   };
 }
 
 export default function Post({ post }) {
   const router = useRouter();
+
+  if (router.isFallback) {
+    return <div>Loading...</div>
+  }
+
   const { id } = router.query;
 
   return <p>Post: {id}</p>;
