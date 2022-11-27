@@ -3,29 +3,26 @@
   Need database cms stuff set up first to get posts' data.
 */
 
-import { useRouter } from "next/router"
+import { useRouter } from "next/router";
+import prisma from "../../lib/prisma";
 
 // getStaticPaths function to generate dynamic paths for the posts statically. Called at build time.
 export async function getStaticPaths() {
-  const posts = [
-    {
-      id: "Dummy-Test-1"
-    },
-    {
-      id: "Dummy-Test-2"
+  const posts = await prisma.posts.findMany({
+    where: {
+      published: true
     }
-  ];
+  });
   const paths = posts.map((post) => ({
-    params: { id: post.id },
+    params: { post },
   }));
   return { paths, fallback: true };
 }
 
 export async function getStaticProps({ params }) {
-  // Get post information from params.id as provided via processing of the getStaticPaths function.
   return {
-    props: { post: {} },
-    revalidate: 120
+    props: { post: params },
+    revalidate: 60
   };
 }
 
@@ -38,5 +35,5 @@ export default function Post({ post }) {
 
   const { id } = router.query;
 
-  return <p>Post: {id}</p>;
+  return <h1>post.title</h1>;
 }
