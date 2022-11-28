@@ -1,6 +1,5 @@
 html,
 body {
-  box-sizing: border-box;
   padding: 0;
   margin: 0;
   margin-left: 10px;
@@ -32,12 +31,13 @@ nav li {
   margin-right: 20px;
 }
 
-nav li a {
-  text-align: center;
+nav button {
+  display: inline-block;
+  margin-left: 5px;
 }
 
-nav li a:hover {
-  background-color: #000000;
+nav li a {
+  text-align: center;
 }
 
 a {
