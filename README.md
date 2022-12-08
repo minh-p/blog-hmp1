@@ -7,15 +7,4 @@ Backend technology will be Next JS.
 
 All of these technologies would be needed to be learned.
 
-# Schedule
-- [ ] Set up database
-    - [X] Setup PostreSql server
-	- [ ] Setup Prisma Schema
-- [ ] Setup backend
-	- [X] Boilerplating
-		- [X] Basic Dynamic Routing (Static Generation).
-	- [ ] Blog Writing and Publishing And Fetching
-		- [ ] Writing and Publishing
-			- [ ] Authenticate To Write Using NextAuth.js
-			- [ ] Setup Markdown Writer, Will Probably Use Markdown-it
-		- [ ] Fetching
+- [Project's Schedule](/docs/Schedule.md)
