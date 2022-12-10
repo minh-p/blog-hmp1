@@ -1,8 +1,41 @@
 import Head from "next/head"
 import Header from "../../src/components/Header.js"
-import { useSession, getSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
+import prisma from "../../lib/prisma";
 
-export default function Drafts() {
+export async function getServerSideProps() {
+  const publishedFeed = await prisma.post.findMany({
+    where: {
+      published: true
+    },
+    include: {
+      author: {
+        select: {
+          name: true
+        }
+      }
+    }
+  });
+
+  const unpublishedFeed = await prisma.post.findMany({
+    where: {
+      published: false
+    },
+    include: {
+      author: {
+        select: {
+          name: true
+        }
+      }
+    }
+  });
+
+  return {
+    props: { publishedFeed, unpublishedFeed }
+  }
+}
+
+export default function Drafts(props) {
   const { data: session } = useSession();
 
   if (!session) {
@@ -20,6 +53,17 @@ export default function Drafts() {
     );
   }
 
+  //TODO There is not any post data yet, so the front end will currently postpone.
+  const unpublishedDrafts = props.publishedFeed.map((post) => (
+    <div key={post.id} className="preview-post">
+    </div>
+  ));
+
+  const publishedDrafts = props.unpublishedFeed.map((post) => (
+    <div key={post.id} className="preview-post">
+    </div>
+  ));
+
   return (
     <div>
       <Head>
@@ -30,6 +74,9 @@ export default function Drafts() {
       <Header />
       <section>
         <h1>Drafts</h1>
+        <h2>Below are some of your recent drafts</h2>
+        {unpublishedDrafts}
+        {publishedDrafts}
       </section>
     </div>
   )
