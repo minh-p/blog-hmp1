@@ -18,6 +18,8 @@
 
 ### Front-End
 - Things should be pretty simple. There should be two divs. One of them is the html text input. The other one would be the displayed html via markdown (using markdown-it library).
+- For the [Invididual Drafts Page](/pages/drafts/"[id].js"), unlike the individual post pages, the admin (me) would be able to edit the post.
+  - So then, this page needs authentication like the draft's index page.
 
 ### Back-End
 - In the Prisma Schema, the markdown content is going to be stored as a string. Or actually as I have too look into it more: a TEXT field.

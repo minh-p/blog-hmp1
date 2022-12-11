@@ -19,11 +19,11 @@ export default function Home({ posts }) {
           Hello, my name is Vu Huy Minh Pham.
           Thank you so much for your time, taking a visit to my dynamic blog web page.
           You might find some information useful here.
-          <br />
+          <br/>
           The rest of the blog is mostly about things that I am doing with passion! :D
-          <br />
+          <br/>
           And as well as some personal preferences.
-          <br /><br/>
+          <br/><br/>
           To view my posts, navigate to the Posts page using the navigation bar.
         </p>
       </section>

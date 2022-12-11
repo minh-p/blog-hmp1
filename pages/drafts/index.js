@@ -31,7 +31,7 @@ export async function getServerSideProps() {
   });
 
   return {
-    props: { publishedFeed, unpublishedFeed }
+    props: { publishedFeed: publishedFeed, unpublishedFeed: unpublishedFeed }
   }
 }
 
