@@ -21,7 +21,7 @@ const options = {
 
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
-      const isAllowedToSignIn = (user == "minh-p");
+      const isAllowedToSignIn = (user.name == "minh-p");
       if (isAllowedToSignIn) {
         return true;
       } else {
