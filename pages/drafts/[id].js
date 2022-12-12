@@ -20,7 +20,7 @@ export async function getStaticPaths() {
     params: { id: draft.id.toString() },
   }));
   paths.push({params: {id: "new_post_create"}});
-  return { paths, fallback: false };
+  return { paths, fallback: true };
 }
 
 export async function getStaticProps({ params }) {
