@@ -40,9 +40,9 @@ export default function Header() {
   }
 
   var navLink = navLinks.map((link, index) => 
-    <Link href={link.path}>
+    <Link key={index} href={link.path}>
       <a data-active={isActive(link.path)}>
-        <li key={index}>{link.name}</li>
+        <li>{link.name}</li>
       </a>
     </Link>
   )

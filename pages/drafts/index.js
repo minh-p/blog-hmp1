@@ -1,6 +1,8 @@
 import Head from "next/head"
-import Header from "../../src/components/Header.js"
+import Header from "../../components/Header.js"
 import { useSession } from 'next-auth/react';
+import Link from "next/link";
+import { useRouter } from "next/router";
 import prisma from "../../lib/prisma";
 
 export async function getServerSideProps() {
@@ -10,9 +12,7 @@ export async function getServerSideProps() {
     },
     include: {
       author: {
-        select: {
-          name: true
-        }
+        select: { name: true, email: true}
       }
     }
   });
@@ -23,9 +23,7 @@ export async function getServerSideProps() {
     },
     include: {
       author: {
-        select: {
-          name: true
-        }
+        select: { name: true, email: true}
       }
     }
   });
@@ -37,6 +35,8 @@ export async function getServerSideProps() {
 
 export default function Drafts(props) {
   const { data: session } = useSession();
+  const router = useRouter();
+  const isActive = (pathname) => router.pathname === pathname;
 
   if (!session) {
     return (
@@ -54,13 +54,23 @@ export default function Drafts(props) {
   }
 
   //TODO There is not any post data yet, so the front end will currently postpone.
-  const unpublishedDrafts = props.publishedFeed.map((post) => (
+  const publishedDrafts = props.publishedFeed.map((post) => (
     <div key={post.id} className="preview-post">
+      <li>
+        <Link href={"/drafts/"+post.id}>
+          <a className="link-to-post" href={"/drafts/"+post.id}>{post.title}</a>
+        </Link>
+      </li>
     </div>
   ));
 
-  const publishedDrafts = props.unpublishedFeed.map((post) => (
+  const unpublishedDrafts = props.unpublishedFeed.map((post) => (
     <div key={post.id} className="preview-post">
+      <li>
+        <Link href={"/drafts/"+post.id}>
+          <a className="link-to-post" href={"/drafts/"+post.id}>{post.title}</a>
+        </Link>
+      </li>
     </div>
   ));
 
@@ -75,8 +85,18 @@ export default function Drafts(props) {
       <section>
         <h1>Drafts</h1>
         <h2>Below are some of your recent drafts</h2>
-        {unpublishedDrafts}
-        {publishedDrafts}
+        <form action="/drafts/new_post_create">
+          <input type="submit" value="Create New Draft" />
+        </form>
+
+        <p>Unpublished</p>
+        <ul>
+          {unpublishedDrafts}
+        </ul>
+        <p>Published</p>
+        <ul>
+          {publishedDrafts}
+        </ul>
       </section>
     </div>
   )

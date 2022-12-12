@@ -5,8 +5,9 @@
 */
 
 import { useRouter } from "next/router";
-import Head from "next/head"
-import Header from "../../src/components/Header.js"
+import Router from "next/router";
+import Head from "next/head";
+import Header from "../../components/Header.js"
 import React, { useState } from 'react';
 import prisma from "../../lib/prisma";
 import { useSession } from 'next-auth/react';
@@ -16,39 +17,98 @@ import ReactMarkdown from 'react-markdown';
 export async function getStaticPaths() {
   const posts = await prisma.post.findMany();
   const paths = posts.map((draft) => ({
-    params: { draft },
+    params: { id: draft.id.toString() },
   }));
-  return { paths, fallback: true };
+  paths.push({params: {id: "new_post_create"}});
+  return { paths, fallback: false };
 }
 
 export async function getStaticProps({ params }) {
+  if (params.id == "new_post_create") return {props: {}};
+  const post = await prisma.post.findUnique({
+    where: {
+      id: Number(params?.id),
+    },
+    include: {
+      author: {
+        select: { name: true, email: true },
+      },
+    },
+  });
   return {
-    props: { draft: params },
-    revalidate: 60
+    props: post,
+    revalidate: 10,
   };
 }
 
-export default function Draft({ draft }) {
+async function publish(id, draftTitle, draftContent) {
+  try {
+    const body = {title: draftTitle, content: draftContent}
+    await fetch(`/api/publish/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    await Router.push("/posts")
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function deletePost(id) {
+  await fetch(`/api/post/${id}`, {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+  });
+  await Router.push("/posts")
+}
+
+export default function Draft(draft) {
   const router = useRouter();
   const { id } = router.query;
   const { data: session } = useSession();
 
-  var defaultTitle = id;
-  var defaultContent = "Start Writing the Post in Markdown :)...";
+  var defaultContent = "";
 
-  var [contentMarkdownInput, setContentMarkdownInput] = useState();
+  var [contentMarkdownInput, setContentMarkdownInput] = useState((draft && draft.content) ? draft.content : "Start Writing the Post in Markdown :)...");
+  var [draftTitle, setDraftTitle] = useState(draft ? draft.title : "");
 
-  if (draft && draft.title) {
-    defaultTitle = draft.title;
-    defaultContent = draft.content;
+  function EditorButtons() {
+
+    async function create(e) {
+      try {
+        const body = { title: draftTitle, content: contentMarkdownInput };
+        await fetch("/api/post", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
+        await router.push("/drafts");
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    if (!draftTitle || !contentMarkdownInput) return;
+
+    if (id == "new_post_create") {
+      return (
+        <button onClick={create}>Create</button>
+      )
+    } else {
+      return (
+        <>
+          <button onClick={() => {publish(draft.id, draftTitle, contentMarkdownInput)}}>Publish</button>
+          <button onClick={() => {deletePost(draft.id)}}>Delete</button>
+        </>
+      )
+    }
   }
 
   // Textarea sucks and it does not indent. So this is here:
   const handleIndent = (e) => {
     if (e.keyCode === 9) {
-      console.log("Tabbed");
       e.preventDefault()
-
       e.target.setRangeText(
         '   ',
         e.target.selectionStart,
@@ -85,19 +145,9 @@ export default function Draft({ draft }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-
-      <label htmlFor="postid">Post ID: </label>
-      <input
-        type="text"
-        id="postid"
-        name="postid"
-        defaultValue={id}
-      /> <label className="warning">WARNING: any changes made to the ID will change the path of this page.</label><br/><br/>
-
-      <label htmlFor="posttitle"> Post Title: </label><br/>
-      <input type="text" id="posttitle" name="posttitle" defaultValue={defaultTitle}/><br/><br/>
-      <button>Write Changes</button>
-      <button>Publish</button>
+      <label htmlFor="posttitle"> Post Title: </label><label className="warning">*(required)</label><br/>
+      <input type="text" id="posttitle" name="posttitle" value={draftTitle} onChange={(e) => {setDraftTitle(e.target.value)}}/><br/><br/>
+      <EditorButtons/>
       <div id="markdown-content-edit">
         <textarea
           autoFocus
@@ -106,7 +156,9 @@ export default function Draft({ draft }) {
           value={contentMarkdownInput}
           onChange={(e) => setContentMarkdownInput(e.target.value)}
         />
-        <ReactMarkdown className="markdown">{contentMarkdownInput}</ReactMarkdown>
+        <div id="markdown-in-draft">
+          <ReactMarkdown>{contentMarkdownInput}</ReactMarkdown>
+        </div>
       </div>
     </div>
   );

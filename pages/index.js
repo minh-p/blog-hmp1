@@ -1,5 +1,5 @@
 import Head from "next/head"
-import Header from "../src/components/Header.js"
+import Header from "../components/Header.js"
 
 export default function Home({ posts }) {
   // The below stuff is like simple html. Kinda crazy how anybody would think this is hard.
