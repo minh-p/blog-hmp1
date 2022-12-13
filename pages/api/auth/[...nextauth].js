@@ -20,8 +20,8 @@ const options = {
   secret: process.env.SECRET,
 
   callbacks: {
-    async signIn({ user, account, profile, email, credentials }) {
-      const isAllowedToSignIn = (user.name == "minh-p");
+    async signIn({ user }) {
+      const isAllowedToSignIn = (user.email == "minhisverynormal@gmail.com");
       if (isAllowedToSignIn) {
         return true;
       } else {

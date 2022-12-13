@@ -35,8 +35,15 @@ export async function getStaticProps({ params }) {
       },
     },
   });
+
+  // stringify DateTime
+  const dateStripped = post => {
+    post.createdAt = JSON.stringify(post.createdAt);
+    return post
+  }
+
   return {
-    props: post,
+    props: dateStripped(post),
     revalidate: 10,
   };
 }
@@ -156,7 +163,7 @@ export default function Draft(draft) {
           value={contentMarkdownInput}
           onChange={(e) => setContentMarkdownInput(e.target.value)}
         />
-        <div id="markdown-in-draft">
+        <div className="markdown" id="markdown-in-draft">
           <ReactMarkdown>{contentMarkdownInput}</ReactMarkdown>
         </div>
       </div>

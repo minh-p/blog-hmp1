@@ -8,14 +8,27 @@ export async function getStaticProps() {
     where: {
       published: true
     },
+    orderBy: {
+      id: 'desc'
+    },
     include: {
       author: {
         select: { name: true, email: true}
       }
     }
   });
+
+  // stringify DateTime
+  const dateStripped = array => {
+    for (var i = 0; i < array.length; i++) {
+      var post = array[i];
+      post.createdAt = JSON.stringify(post.createdAt);
+    }
+    return array;
+  }
+
   return {
-    props: {posts: posts},
+    props: {posts: dateStripped(posts)},
     revalidate: 10
   }
 }
@@ -26,7 +39,7 @@ export default function Posts({ posts }) {
       <div key={post.id} className="preview-post">
         <li>
           <Link href={"/posts/"+post.id}>
-            <a className="link-to-post" href={"/posts/"+post.id}>{post.title}</a>
+            <a className="link-to-post" href={"/posts/"+post.id}>{post.createdAt.substring(1, post.createdAt.length-15)}: {post.title}</a>
           </Link>
         </li>
       </div>

@@ -10,6 +10,9 @@ export async function getServerSideProps() {
     where: {
       published: true
     },
+    orderBy: {
+      id: 'desc'
+    },
     include: {
       author: {
         select: { name: true, email: true}
@@ -21,6 +24,9 @@ export async function getServerSideProps() {
     where: {
       published: false
     },
+    orderBy: {
+      id: 'desc'
+    },
     include: {
       author: {
         select: { name: true, email: true}
@@ -28,8 +34,16 @@ export async function getServerSideProps() {
     }
   });
 
+  // stringify DateTime
+  const dateStripped = array => {
+    for (var i = 0; i < array.length; i++) {
+      var post = array[i];
+      post.createdAt = JSON.stringify(post.createdAt);
+    }
+    return array;
+  }
   return {
-    props: { publishedFeed: publishedFeed, unpublishedFeed: unpublishedFeed }
+    props: { publishedFeed: dateStripped(publishedFeed), unpublishedFeed: dateStripped(unpublishedFeed) }
   }
 }
 
@@ -58,7 +72,7 @@ export default function Drafts(props) {
     <div key={post.id} className="preview-post">
       <li>
         <Link href={"/drafts/"+post.id}>
-          <a className="link-to-post" href={"/drafts/"+post.id}>{post.title}</a>
+          <a className="link-to-post" href={"/drafts/"+post.id}>{post.createdAt.substring(1, post.createdAt.length-15)}: {post.title}</a>
         </Link>
       </li>
     </div>

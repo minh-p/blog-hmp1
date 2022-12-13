@@ -8,6 +8,14 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
+.markdown a {
+  text-decoration: underline;
+}
+
+.markdown a:hover {
+  color: green;
+}
+
 #markdown-content-edit {
   display: flex;
   gap: 10px;

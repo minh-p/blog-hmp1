@@ -33,8 +33,14 @@ export async function getStaticProps({ params }) {
       },
     },
   });
+
+  const dateStripped = post => {
+    post.createdAt = JSON.stringify(post.createdAt);
+    return post
+  }
+
   return {
-    props: post,
+    props: dateStripped(post),
     revalidate: 10
   };
 }
