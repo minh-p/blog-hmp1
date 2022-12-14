@@ -6,6 +6,7 @@ body {
   margin-right: 10px;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-size: 3vmin;
 }
 
 .markdown a {
@@ -27,7 +28,7 @@ body {
 }
 
 .blog-title {
-  font-size: 50px;
+  font-size: 6vmin;
   color: #34548a;
 }
 
@@ -37,7 +38,6 @@ body {
 
 #post-content-markdown {
   width: 50%;
-  font-size: 1rem;
   outline: none;
   border: 2px solid #A1AAD1;
   resize: none;
@@ -87,6 +87,7 @@ nav li {
 nav button {
   display: inline-block;
   margin-left: 5px;
+  font-size: 3vmin;
 }
 
 nav li a {
@@ -117,5 +118,22 @@ h2 {
     font-family: "sans-serif";
     color: #A1AAD1;
     background: #24283B;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  header {
+    display: block;
+    justify-content: start;
+    height: 100%;
+    z-index: 1; /* stay on top of other uis */
+    top: 0; /* stay at the top position */
+    left: 0; /* stay over to the right */
+    overflow-x: hidden; /* disable horizontal scrolling in the x axis. */
+  }
+
+  header nav ul {
+    margin: 0;
+    padding: 0;
   }
 }

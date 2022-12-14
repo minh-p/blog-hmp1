@@ -59,7 +59,7 @@ export default function Post(post) {
     return (
       <div>
         <Head>
-          <title>HMP_Blog</title>
+          <title>HMP_Blog - Post Not Found</title>
           <meta name="description" content="HMP_Blog, a blog created by Vu Huy Minh Pham" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
@@ -73,7 +73,7 @@ export default function Post(post) {
   return (
     <div>
       <Head>
-        <title>HMP_Blog</title>
+        <title>HMP_Blog - {title}</title>
         <meta name="description" content="HMP_Blog, a blog created by Vu Huy Minh Pham" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

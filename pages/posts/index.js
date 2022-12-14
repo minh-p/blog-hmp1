@@ -51,7 +51,7 @@ export default function Posts({ posts }) {
   return (
     <div>
       <Head>
-        <title>HMP_Blog</title>
+        <title>HMP_Blog - Posts</title>
         <meta name="description" content="HMP_Blog, a blog created by Vu Huy Minh Pham" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

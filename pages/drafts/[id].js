@@ -129,7 +129,7 @@ export default function Draft(draft) {
     return (
       <div>
         <Head>
-          <title>HMP_Blog</title>
+          <title>HMP_Blog - Draft Permission Denied</title>
           <meta name="description" content="HMP_Blog, a blog created by Vu Huy Minh Pham" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
@@ -147,7 +147,7 @@ export default function Draft(draft) {
   return (
     <div>
       <Head>
-        <title>HMP_Blog</title>
+        <title>HMP_Blog - {draftTitle}</title>
         <meta name="description" content="HMP_Blog, a blog created by Vu Huy Minh Pham" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

@@ -82,7 +82,7 @@ export default function Drafts(props) {
     <div key={post.id} className="preview-post">
       <li>
         <Link href={"/drafts/"+post.id}>
-          <a className="link-to-post" href={"/drafts/"+post.id}>{post.title}</a>
+          <a className="link-to-post" href={"/drafts/"+post.id}>{post.createdAt.substring(1, post.createdAt.length-15)}: {post.title}</a>
         </Link>
       </li>
     </div>
@@ -91,7 +91,7 @@ export default function Drafts(props) {
   return (
     <div>
       <Head>
-        <title>HMP_Blog</title>
+        <title>HMP_Blog - Drafts</title>
         <meta name="description" content="HMP_Blog, a blog created by Vu Huy Minh Pham" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
